@@ -1,43 +1,55 @@
 $(function(){
 	var ctx = document.getElementById("canvas").getContext("2d");
 	var myMixedChart;
+	var performedOnce = false;
+	var dataPoints = []
+	var randArray = []
 	function gatherData(){
 		$.ajax(
 			{
 				url: 'http://localhost:8000/impressions?dc=NA',
 				type: 'GET',
 				dataType: 'json',
-				success: function(data){
-					var dataPoints = []
+				success: function(data){					
 					counter = 0;
-					var innerCounter = 0;
+					
 					data.data.forEach(function(data){
-						if (counter % 110 == 0){
+						if (counter % 100 == 0){
 
-							if (innerCounter % 10 == 0){
-								update(dataPoints, {
+							if (performedOnce){
+								//console.log(dataPoints[0]);
+								dataPoints.splice(0, 1);
+								//console.log(dataPoints[0]);
+								//dataPoints.push(dataPoint);
+								//update(dataPoints, {
+								//	x: counter,
+								//	y: data.impressions
+								//});
+							}	
+							//}else{
+								dataPoints.push({
 									x: counter,
 									y: data.impressions
-								});
-								
-							}else{
-								dataPoints.push({
-								x: counter,
-								y: data.impressions
-								});
-								plot(dataPoints);
-							}	
-							innerCounter++;					
+								});	
+							if (randArray.includes(data)){
+								console.log('REPEAT!');
+							}					
+							console.log(data.impressions);		
+							//}					
 						}
 						counter++;
 					});
+					//if (!performedOnce){
+						plot(dataPoints);
+						performedOnce = true;
+					//}
 					
 				}
 			}
 		)
 	}
 	gatherData();	
-	setInterval(gatherData, 20000);
+	setInterval(gatherData, 5000);
 	function update(dataPoints, dataPoint){
 		dataPoints.splice(0, 1);
 		dataPoints.push(dataPoint);
@@ -54,7 +66,7 @@ $(function(){
                 data: dataPoints
             }]
         }
-        myMixedChart = new Chart(ctx, {
+        window.myMixedChart = new Chart(ctx, {
                 type: 'line',
                 data: chartData,
                 options: {
@@ -66,6 +78,7 @@ $(function(){
                   }
               }
         });
+        window.myMixedChart.update();
         //update(chartData);
 	}
 //         window.onload = function() {

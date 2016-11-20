@@ -24,6 +24,10 @@ app.get('/chart', function(req, res){
 	res.sendfile('chart.html');
 });
 
+app.get('/chart2', function(req, res){
+	res.sendfile('trend_forecast.html');
+});
+
 // Start the server
 app.listen(3000);
 console.log('Listening on port 3000');

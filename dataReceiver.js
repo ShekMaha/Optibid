@@ -3,7 +3,6 @@ $(function(){
 	var myMixedChart;
 	var performedOnce = false;
 	var dataPoints = []
-	var randArray = []
 	function gatherData(){
 		$.ajax(
 			{
@@ -30,11 +29,7 @@ $(function(){
 								dataPoints.push({
 									x: counter,
 									y: data.impressions
-								});	
-							if (randArray.includes(data)){
-								console.log('REPEAT!');
-							}					
-							console.log(data.impressions);		
+								});						
 							//}					
 						}
 						counter++;
@@ -57,6 +52,7 @@ $(function(){
 	}
 	
 	function plot(dataPoints){
+		 ctx = document.getElementById("canvas").getContext("2d");
 		 var chartData = { 
 		 	datasets: [{
                 type: 'line',

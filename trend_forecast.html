@@ -22,8 +22,6 @@
     </div>
     <button id="randomizeData"> Randomize Data </button>
     <div id="decider">nu</div>
-
-    <script src="noUiSlider.9.0.0/nouislider.min.js"></script>
     <script>
         function initiliazeData(db) {
           for(var k=0; k<30; k++)
@@ -31,7 +29,7 @@
               var day = []
               for(var j=0; j <24; j+=2)
               {
-                day.push(randomScalingFactor())
+                day.push(Math.abs(randomScalingFactor()))
               }
               db.push(day)
             }
@@ -97,52 +95,52 @@
                 fill: false,
                 data: [{
                     x: 11,
-                    y: randomScalingFactor()
+                    y: Math.abs(randomScalingFactor())
                 }, {
                   x: 12,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 }, {
                   x: 13,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 }, {
                   x: 14,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 }, {
                   x: 15,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 16,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 17,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 18,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 19,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 20,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 21,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 22,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 23,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 24,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 },{
                   x: 25,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 }, {
                   x: 26,
-                  y: randomScalingFactor()
+                  y: Math.abs(randomScalingFactor())
                 }
             ] }
             ]
@@ -175,7 +173,7 @@
 
         function refreshGraph(){
             current_time++
-            trend_db.push(randomScalingFactor());
+            trend_db.push(Math.abs(randomScalingFactor()));
             var i = current_time-16
             var j = 0;
             console.log(trend_db[0][(i+1)])

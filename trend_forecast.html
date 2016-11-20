@@ -1,0 +1,217 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <title>Combo Bar-Line Chart</title>
+    <script src="node_modules/Chart.js/dist/Chart.bundle.js"></script>
+    <script src="utils.js"></script>
+    <link href="noUiSlider.9.0.0/nouislider.min.css" rel="stylesheet">
+    <style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div style="width: 75%">
+        <canvas id="canvas"></canvas>
+    </div>
+    <button id="randomizeData"> Randomize Data </button>
+    <div id="decider">nu</div>
+
+    <script src="noUiSlider.9.0.0/nouislider.min.js"></script>
+    <script>
+        function initiliazeData(db) {
+          for(var k=0; k<30; k++)
+          {
+              var day = []
+              for(var j=0; j <24; j+=2)
+              {
+                day.push(randomScalingFactor())
+              }
+              db.push(day)
+            }
+        }
+        var trend_db = []
+        initiliazeData(trend_db);
+        document.getElementById('decider').innerHtml += 'Neutral';
+        var prediction_db = []
+
+        var current_time = 24
+        var chartData = {
+            datasets: [{
+                type: 'line',
+                label: 'Current Trend',
+                borderColor: window.chartColors.blue,
+                borderWidth: 2,
+                fill: false,
+                data: [{
+                    x: 9,
+                    y: trend_db[0][0]
+                }, {
+                  x: 10,
+                  y: trend_db[0][1]
+                }, {
+                  x: 11,
+                  y: trend_db[0][2]
+                }, {
+                  x: 12,
+                  y: trend_db[0][3]
+                }, {
+                  x: 13,
+                  y: trend_db[0][4]
+                },{
+                  x: 14,
+                  y: trend_db[0][5]
+                },{
+                  x: 15,
+                  y: trend_db[0][6]
+                },{
+                  x: 16,
+                  y: trend_db[0][7]
+                },{
+                  x: 17,
+                  y: trend_db[0][8]
+                },{
+                  x: 18,
+                  y: trend_db[0][9]
+                },{
+                  x: 20,
+                  y: trend_db[0][10]
+                },{
+                  x: 22,
+                  y: trend_db[0][11]
+                },{
+                  x: 24,
+                  y: trend_db[0][12]
+                }]
+              }, {
+                type: 'line',
+                label: 'Current Trend',
+                borderColor: window.chartColors.yellow,
+                borderWidth: 2,
+                fill: false,
+                data: [{
+                    x: 11,
+                    y: randomScalingFactor()
+                }, {
+                  x: 12,
+                  y: randomScalingFactor()
+                }, {
+                  x: 13,
+                  y: randomScalingFactor()
+                }, {
+                  x: 14,
+                  y: randomScalingFactor()
+                }, {
+                  x: 15,
+                  y: randomScalingFactor()
+                },{
+                  x: 16,
+                  y: randomScalingFactor()
+                },{
+                  x: 17,
+                  y: randomScalingFactor()
+                },{
+                  x: 18,
+                  y: randomScalingFactor()
+                },{
+                  x: 19,
+                  y: randomScalingFactor()
+                },{
+                  x: 20,
+                  y: randomScalingFactor()
+                },{
+                  x: 21,
+                  y: randomScalingFactor()
+                },{
+                  x: 22,
+                  y: randomScalingFactor()
+                },{
+                  x: 23,
+                  y: randomScalingFactor()
+                },{
+                  x: 24,
+                  y: randomScalingFactor()
+                },{
+                  x: 25,
+                  y: randomScalingFactor()
+                }, {
+                  x: 26,
+                  y: randomScalingFactor()
+                }
+            ] }
+            ]
+
+        };
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myMixedChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                  scales: {
+                      xAxes: [{
+                          type: 'linear',
+                          position: 'bottom'
+                      }]
+                  }
+              }
+            });
+        };
+
+        function findProjctedAverage(hour) {
+          var average = 0
+          for(var i = 0; i< trend_db.length; i++)
+          {
+            average += trend_db[0][hour]/trend_db.length
+          }
+          return average
+        }
+
+        function refreshGraph(){
+            current_time++
+            trend_db.push(randomScalingFactor());
+            var i = current_time-16
+            var j = 0;
+            console.log(trend_db[0][(i+1)])
+            console.log(findProjctedAverage(current_time))
+            console.log(current_time)
+            chartData.datasets.forEach(
+              function(dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return {
+                        x: (i+1) +j,
+                        y: trend_db[0][(i+1)]* Math.abs(j-1) + findProjctedAverage(current_time)*j
+                    };
+                    i+=2;
+                });
+                j+=2;
+                window.myMixedChart.update();
+            });
+        }
+
+        //setInterval(refreshGraph, 5000)
+        document.getElementById('randomizeData').addEventListener('click', refreshGraph)
+         /*function() {
+
+            chartData.datasets.forEach(function(dataset) {
+                var i = current_time
+                dataset.data = dataset.data.map(function() {
+                    return {
+                        x: i+=2,
+                        y: Math.abs(randomScalingFactor())
+                    };
+
+                });
+            });
+            window.myMixedChart.update();
+        });*/-16
+    </script>
+</body>
+
+</html>

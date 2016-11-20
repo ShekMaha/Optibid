@@ -20,6 +20,10 @@ app.get('/', function(req, res) {
    res.sendfile('index.html');
 });
 
+app.get('/chart', function(req, res){
+	res.sendfile('chart.html');
+});
+
 // Start the server
 app.listen(3000);
 console.log('Listening on port 3000');

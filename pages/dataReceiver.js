@@ -56,6 +56,7 @@ $(function(){
 		 var chartData = { 
 		 	datasets: [{
                 type: 'line',
+                borderColor: window.chartColors.blue,
                 borderWidth: 2,
                 fill: false,
                 data: dataPoints

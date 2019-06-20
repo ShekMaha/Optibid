@@ -23,7 +23,7 @@
     "on-headers": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^3.10.2",
+    "eslint": "^4.18.2",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-config-dir": "^0.3.2",
